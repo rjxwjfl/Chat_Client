@@ -1,6 +1,7 @@
 package src.Controller.Thread;
 
 import src.Controller.Thread.Interface.InputThreadListener;
+import src.View.ChattingClient;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,11 +28,15 @@ public class InputThread extends Thread{
                     a = inputStream.read(buffer);
                     inputString += new String(buffer, 0, a).trim();
                 }
-                listener.onInput(inputString);
-                System.out.println(inputString);
+                String[] inputs = inputString.split("\n");
+                for (String input : inputs){
+                    listener.onInput(input);
+                    System.out.println("New --- >" + input);
+                }
             }
         } catch (SocketException e){
             System.out.println("!! ERROR !!\nDETAILS : " + e);
+            ChattingClient.getinstance().paneController("loginPanel");
             listener.onConnectionLost();
         } catch (IOException e) {
             e.printStackTrace();

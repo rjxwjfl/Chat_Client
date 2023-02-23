@@ -1,6 +1,5 @@
 package src.Controller.Thread;
 
-import src.Controller.Repository.SocketCorrespModule;
 import src.View.ChattingClient;
 
 import java.io.IOException;
@@ -35,7 +34,7 @@ public class EchoThread extends Thread{
             }
         } catch (SocketException e){
             System.out.println("Connection to the server has been forced to terminate.");
-            ChattingClient.getinstance().paneController("loginPanel");
+            ChattingClient.getinstance().forcedExit();
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
