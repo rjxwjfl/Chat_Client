@@ -34,12 +34,10 @@ public class OutputThread extends Thread implements ScmListener {
     }
 
     public synchronized void addPrintWriter(PrintWriter pw) {
-        System.out.println("\"PRINT-WRITER CREATED\"");
         pws.add(pw);
     }
 
     public synchronized void removePrintWriter() {
         pws.clear();
-        System.out.println("\"PRINT-WRITER REMOVED\"");
     }
 }

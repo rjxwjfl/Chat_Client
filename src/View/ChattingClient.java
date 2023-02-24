@@ -55,7 +55,7 @@ public class ChattingClient extends JFrame {
                         JOptionPane.YES_NO_OPTION);
 
                 if (confirmed == JOptionPane.YES_OPTION) {
-                    if (socketCorrespModule != null){
+                    if (socketCorrespModule != null) {
                         socketCorrespModule.connectionSwitch(false);
                     }
                     System.out.println("Select : " + confirmed);
@@ -84,13 +84,13 @@ public class ChattingClient extends JFrame {
         mainPanel.add(loginPanel, "loginPanel");
         loginPanel.setLayout(null);
 
-        Insets nifInset = new Insets(8,12,8,12);
-        Border borderPadding = BorderFactory.createEmptyBorder(8,12,8,12);
+        Insets nifInset = new Insets(8, 12, 8, 12);
+        Border borderPadding = BorderFactory.createEmptyBorder(8, 12, 8, 12);
 
         nickInputField = new EnhancedTextField();
         nickInputField.setMargin(nifInset);
         nickInputField.setBorder(borderPadding);
-        nickInputField.setBounds(73,495,300,45);
+        nickInputField.setBounds(85, 495, 300, 45);
         nickInputField.setColumns(10);
         nickInputField.setOpaque(false);
         nickInputField.setFont(new Font("Droid Sans Mono Slashed", Font.PLAIN, 20));
@@ -117,15 +117,15 @@ public class ChattingClient extends JFrame {
         });
 
         lpLoginBtn.setIcon(new ImageIcon(Objects.requireNonNull(ChattingClient.class.getResource("../assets/lgnBtn.png"))));
-        lpLoginBtn.setBounds(73, 573, 300, 45);
+        lpLoginBtn.setBounds(85, 573, 300, 45);;
         lpLoginBtn.setBackground(Color.white);
-        lpLoginBtn.setOpaque(false);//투명하게
+        lpLoginBtn.setOpaque(false);
         lpLoginBtn.setBorderPainted(false);
         loginPanel.add(lpLoginBtn);
 
         JLabel lpImageIcon = new JLabel("");
         lpImageIcon.setIcon(new ImageIcon(Objects.requireNonNull(ChattingClient.class.getResource("../assets/icon2.png"))));
-        lpImageIcon.setBounds(183, 226, 68, 69);
+        lpImageIcon.setBounds(205, 226, 70, 70);
         loginPanel.add(lpImageIcon);
 
 
@@ -135,6 +135,18 @@ public class ChattingClient extends JFrame {
         chatListPanel.setBackground(new Color(255, 204, 0));
         mainPanel.add(chatListPanel, "chatListPanel");
         chatListPanel.setLayout(null);
+
+        JLabel cpImageIcon = new JLabel("");
+        cpImageIcon.setIcon(new ImageIcon(Objects.requireNonNull(ChattingClient.class.getResource("../assets/icon2.png"))));
+        cpImageIcon.setBounds(34, 33, 70, 70);
+        chatListPanel.add(cpImageIcon);
+
+        JLabel lobbyLabel = new JLabel("대기실");
+        lobbyLabel.setBounds(18, 108, 100, 40);
+        lobbyLabel.setBorder(new EnhancedBorderLine(Color.black, 1, 10, 10));
+        lobbyLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        lobbyLabel.setFont(new Font("맑은 고딕", Font.BOLD, 25));
+        chatListPanel.add(lobbyLabel);
 
         JScrollPane cpChatListScroll = new JScrollPane();
         cpChatListScroll.setBounds(133, 5, 326, 729);
@@ -178,13 +190,8 @@ public class ChattingClient extends JFrame {
         });
 
 
-
         cpChatListScroll.setViewportView(cpChatList);
 
-        JLabel cpImageIcon = new JLabel("");
-        cpImageIcon.setIcon(new ImageIcon(Objects.requireNonNull(ChattingClient.class.getResource("../assets/icon2.png"))));
-        cpImageIcon.setBounds(33, 33, 70, 70);
-        chatListPanel.add(cpImageIcon);
 
         EnhancedButton addBtn = new EnhancedButton();
         EnhancedBorderLine borderLine = new EnhancedBorderLine(Color.black, 2, 10, 10);
@@ -192,18 +199,21 @@ public class ChattingClient extends JFrame {
         addBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-
-                currentTitle = JOptionPane.showInputDialog(null,
-                        "방제를 입력하세요.",
-                        "생성",
-                        JOptionPane.INFORMATION_MESSAGE);
-                if (currentTitle != null) {
-                    socketCorrespModule.outputHandler(5, currentTitle);
-                } else {
-                    JOptionPane.getRootFrame().dispose();
+                while (true) {
+                    currentTitle = JOptionPane.showInputDialog(null,
+                            "방제를 입력하세요.",
+                            "생성",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    if (currentTitle != null && !currentTitle.isBlank()) {
+                        socketCorrespModule.outputHandler(5, currentTitle);
+                        break;
+                    } else if (currentTitle == null) {
+                        JOptionPane.getRootFrame().dispose();
+                        break;
+                    } else {
+                        notifyMsg("방제를 입력해주세요.");
+                    }
                 }
-
-
             }
         });
 
@@ -249,8 +259,8 @@ public class ChattingClient extends JFrame {
         inputField = new EnhancedTextField();
         inputField.setBounds(9, 701, 366, 50);
         inputField.setHintText("Input your message...");
-        inputField.setMargin(new Insets(8,12,8,12));
-        inputField.setBorder(BorderFactory.createEmptyBorder(8,12,8,12));
+        inputField.setMargin(new Insets(8, 12, 8, 12));
+        inputField.setBorder(BorderFactory.createEmptyBorder(8, 12, 8, 12));
         inputField.setOpaque(false);
         inputField.setArcHeight(10);
         inputField.setArcWidth(10);
@@ -277,7 +287,7 @@ public class ChattingClient extends JFrame {
 
         rpChatTitle = new JLabel("");
         rpChatTitle.setBounds(30, 15, 300, 46);
-        rpChatTitle.setFont(new Font("Droid Sans Mono Slashed", Font.BOLD, 32));
+        rpChatTitle.setFont(new Font("맑은 고딕", Font.BOLD, 32));
         chatRoomPanel.add(rpChatTitle);
 
 
@@ -304,7 +314,6 @@ public class ChattingClient extends JFrame {
         });
 
     }
-
 
 
     public void paneController(String pane) {
@@ -335,7 +344,7 @@ public class ChattingClient extends JFrame {
         }
     }
 
-    public void loginSession(){
+    public void loginSession() {
         ServerConnection serverConnection = new ServerConnection();
         if (nickInputField.getText().isBlank()) {
             notifyMsg("닉네임을 입력해주세요.");
@@ -344,29 +353,29 @@ public class ChattingClient extends JFrame {
         socketCorrespModule = serverConnection.connect(nickInputField.getText());
     }
 
-    public void sMsgInd(){
+    public void sMsgInd() {
         String userNickName = socketCorrespModule.getUser().getNickName();
-        if (!inputField.getText().isBlank()){
+        if (!inputField.getText().isBlank()) {
             rpContentsView.append("\n" + userNickName + " (나)  :  " + inputField.getText());
             socketCorrespModule.outputHandler(6, inputField.getText());
             inputField.setText("");
         }
     }
 
-    public void clearAll(){
+    public void clearAll() {
         rpContentsView.selectAll();
         rpContentsView.replaceSelection("");
         userListModel.clear();
     }
 
-    public void forcedExit(){
+    public void forcedExit() {
         socketCorrespModule.onConnectionLost();
         paneController("loginPanel");
         notifyMsg("서버와의 연결이 끊겼습니다.");
         clearAll();
     }
 
-    public void userNums(int value){
+    public void userNums(int value) {
         SwingWorker<Void, String> worker = new SwingWorker<>() {
             @Override
             protected Void doInBackground() {

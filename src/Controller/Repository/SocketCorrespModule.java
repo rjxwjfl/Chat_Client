@@ -70,40 +70,35 @@ public class SocketCorrespModule implements InputThreadListener, OutputThreadLis
         ChattingClient cc = ChattingClient.getinstance();
 
         switch (code) {
-            case 1:
-                // Connection complete. Loading entire chat list.
+            case 1: // Connection complete. Loading entire chat list.
                 System.out.println(dto.getBody());
                 break;
-            case 2:
-                // set UserModel
+            case 2: // Set UserModel
                 LinkedTreeMap<?, ?> map = (LinkedTreeMap<?, ?>) dto.getBody();
                 user = new UserModel((String) map.get("nickName"), ((Double) map.get("PORT")).intValue());
                 cc.paneController("chatListPanel");
                 break;
-            case 3: // Entered chat
+            case 3: // Chat room entry complete.
                 cc.paneController("chatRoomPanel");
                 double initEntry = (double) dto.getBody();
                 cc.userNums((int) initEntry);
                 break;
-            case 4:
-                // Left Complete
+            case 4: // Left Complete
                 list = (List<String>) dto.getBody();
                 cc.addItem(list);
                 cc.paneController("chatListPanel");
                 break;
-            case 5:
-                // A new chat creation complete
+            case 5: // A new chat creation complete
                 cc.userNums(1);
                 cc.paneController("chatRoomPanel");
                 cc.createNewChat(user.getNickName(), currentTitle);
                 break;
-            case 7:
+            case 7: // A Message reception
                 LinkedTreeMap<?, ?> msg = (LinkedTreeMap<?, ?>) dto.getBody();
                 UserModel sender = new UserModel((String) ((LinkedTreeMap<?, ?>) msg.get("sender")).get("nickName"),
                         ((Double) ((LinkedTreeMap<?, ?>) msg.get("sender")).get("PORT")).intValue());
                 MFSmodel cht = new MFSmodel(sender, (String) msg.get("contents"));
                 cc.addChatMsd("[ " + cht.getSender().getNickName() + " ]  :  " + cht.getContents());
-                // A Message reception
                 break;
             case 101: // A new chat has been added. / A chat has been removed.
                 list = (List<String>) dto.getBody();
@@ -127,7 +122,7 @@ public class SocketCorrespModule implements InputThreadListener, OutputThreadLis
                 list = (List<String>) dto.getBody();
                 cc.addItem(list);
                 break;
-            case 401:
+            case 401: // Update the number of people in the chat room
                 double body = (double) dto.getBody();
                 cc.userNums((int) body);
                 break;
@@ -140,34 +135,26 @@ public class SocketCorrespModule implements InputThreadListener, OutputThreadLis
     public void outputHandler(int code, Object body) {
         Dto<?> dto;
         switch (code) {
-            case 1:
-                // Connection request.
+            case 1: // Connection request.
                 dto = new Dto<>(code, (String) body);
                 System.out.println(dto);
                 onOutput(dto);
                 break;
-            case 2:
-                // Disconnection notify.
-                break;
-            case 3:
+            case 3: // Send a request for enter the chat room.
             case 401:
                 dto = new Dto<>(code, body);
                 onOutput(dto);
-                // Joining request.
                 break;
-            case 4:
+            case 4: // Left notify to server.
                 dto = new Dto<>(4, body);
                 onOutput(dto);
-                // Left notify.
                 break;
-            case 5:
+            case 5: // Create a new chat.
                 dto = new Dto<>(code, body);
-                currentTitle = (String) body; // title
+                currentTitle = (String) body;
                 onOutput(dto);
-                // Create a new chat.
                 break;
-            case 6:
-                // A Message sending.
+            case 6: // A Message sending.
                 String msg = (String) body;
                 MTSmodel ts = new MTSmodel(user, msg, false, null);
                 dto = new Dto<>(code, ts);
