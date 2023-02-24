@@ -97,6 +97,15 @@ public class ChattingClient extends JFrame {
         nickInputField.setArcHeight(10);
         nickInputField.setArcWidth(10);
         nickInputField.setHintText("Input your nickname.");
+        nickInputField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if ((nickInputField.getText().length() + 1) > 10) {
+                    e.consume();
+                    notifyMsg("닉네임은 10자 이하로 입력해주세요.");
+                }
+            }
+        });
         loginPanel.add(nickInputField);
 
         JButton lpLoginBtn = new JButton("");
@@ -117,7 +126,8 @@ public class ChattingClient extends JFrame {
         });
 
         lpLoginBtn.setIcon(new ImageIcon(Objects.requireNonNull(ChattingClient.class.getResource("../assets/lgnBtn.png"))));
-        lpLoginBtn.setBounds(85, 573, 300, 45);;
+        lpLoginBtn.setBounds(85, 573, 300, 45);
+        ;
         lpLoginBtn.setBackground(Color.white);
         lpLoginBtn.setOpaque(false);
         lpLoginBtn.setBorderPainted(false);
@@ -200,18 +210,23 @@ public class ChattingClient extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 while (true) {
-                    currentTitle = JOptionPane.showInputDialog(null,
+                    String input;
+                    input = JOptionPane.showInputDialog(null,
                             "방제를 입력하세요.",
                             "생성",
                             JOptionPane.INFORMATION_MESSAGE);
-                    if (currentTitle != null && !currentTitle.isBlank()) {
+                    if (input != null && !input.isBlank() && input.length() < 20) {
+                        currentTitle = input.trim();
                         socketCorrespModule.outputHandler(5, currentTitle);
                         break;
-                    } else if (currentTitle == null) {
+                    } else if (input != null && input.length() > 20) {
+                        notifyMsg("방제는 20자 이하로 입력해주세요.");
                         JOptionPane.getRootFrame().dispose();
-                        break;
+                    } else if (input.isBlank()||input == null) {
+                        notifyMsg("방제를 정확하게 입력해주세요.");
+                        JOptionPane.getRootFrame().dispose();
                     } else {
-                        notifyMsg("방제를 입력해주세요.");
+                        System.out.println(input);
                     }
                 }
             }
@@ -260,6 +275,7 @@ public class ChattingClient extends JFrame {
         rpContentsView = new JTextArea();
         rpContentsView.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(12, 8, 12, 8),
                 BorderFactory.createLineBorder(new Color(255, 255, 255, 0))));
+        rpContentsView.setEditable(false);
         rpContentsScroll.setViewportView(rpContentsView);
 
         inputField = new EnhancedTextField();
@@ -270,6 +286,15 @@ public class ChattingClient extends JFrame {
         inputField.setOpaque(false);
         inputField.setArcHeight(10);
         inputField.setArcWidth(10);
+        inputField.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                if ((inputField.getText().length() + 1) > 40) {
+                    e.consume();
+                    JOptionPane.showMessageDialog(null, "메시지 최대 글자수는 40자입니다.");
+                }
+            }
+        });
         chatRoomPanel.add(inputField);
 
         JButton rpChatOutBtn = new JButton("");
@@ -354,6 +379,9 @@ public class ChattingClient extends JFrame {
         ServerConnection serverConnection = new ServerConnection();
         if (nickInputField.getText().isBlank()) {
             notifyMsg("닉네임을 입력해주세요.");
+            return;
+        } else if (nickInputField.getText().contains("　") || nickInputField.getText().contains(" ")) {
+            notifyMsg("닉네임에 공백은 들어갈 수 없습니다.");
             return;
         }
         socketCorrespModule = serverConnection.connect(nickInputField.getText());
