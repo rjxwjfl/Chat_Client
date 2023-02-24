@@ -249,6 +249,12 @@ public class ChattingClient extends JFrame {
         rpContentsScroll.setBounds(7, 103, 450, 590);
         rpContentsScroll.getViewport().setOpaque(true);
         rpContentsScroll.setBorder(new EnhancedBorderLine(Color.ORANGE, 4, 10, 10));
+        JScrollBar verticalScrollBar = rpContentsScroll.getVerticalScrollBar();
+        AdjustmentListener adjustmentListener = e -> {
+            Adjustable adjustable = e.getAdjustable();
+            adjustable.setValue(adjustable.getMaximum());
+        };
+        verticalScrollBar.addAdjustmentListener(adjustmentListener);
         chatRoomPanel.add(rpContentsScroll);
 
         rpContentsView = new JTextArea();

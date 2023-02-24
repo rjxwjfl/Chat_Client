@@ -71,7 +71,6 @@ public class SocketCorrespModule implements InputThreadListener, OutputThreadLis
 
         switch (code) {
             case 1: // Connection complete. Loading entire chat list.
-                System.out.println(dto.getBody());
                 break;
             case 2: // Set UserModel
                 LinkedTreeMap<?, ?> map = (LinkedTreeMap<?, ?>) dto.getBody();
@@ -106,7 +105,6 @@ public class SocketCorrespModule implements InputThreadListener, OutputThreadLis
                 break;
             case 201: // A new user entered this chat.
                 outputHandler(401, "request");
-                System.out.println("TEST : " + dto.getBody());
                 String uIn = (String) dto.getBody();
                 cc.addChatMsd("<< SYSTEM MESSAGE >>\n    " + uIn + " 님이 접속하셨습니다.");
                 break;
@@ -125,9 +123,6 @@ public class SocketCorrespModule implements InputThreadListener, OutputThreadLis
             case 401: // Update the number of people in the chat room
                 double body = (double) dto.getBody();
                 cc.userNums((int) body);
-                break;
-            default:
-                // UserModel return.
                 break;
         }
     }

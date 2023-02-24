@@ -34,8 +34,8 @@ public class InputThread extends Thread{
             }
         } catch (SocketException e){
             System.out.println("!! ERROR !!\nDETAILS : " + e);
-            ChattingClient.getinstance().paneController("loginPanel");
             listener.onConnectionLost();
+            ChattingClient.getinstance().paneController("loginPanel");
         } catch (IOException e) {
             e.printStackTrace();
         }

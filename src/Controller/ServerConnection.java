@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class ServerConnection {
-    private static final String iNetAddress = "127.0.0.1";
+    private static final String iNetAddress = "192.168.2.10";
     private static final int PORT_MAIN = 8080;
     private static final int PORT_SUB = 8888;
     private static SocketCorrespModule scm;
