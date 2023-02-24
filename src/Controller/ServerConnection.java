@@ -1,8 +1,8 @@
-package src.Controller;
+package Controller;
 
-import src.Controller.Repository.SocketCorrespModule;
-import src.Controller.Thread.EchoThread;
-import src.View.ChattingClient;
+import Controller.Repository.SocketCorrespModule;
+import Controller.Thread.EchoThread;
+import View.ChattingClient;
 
 import java.io.IOException;
 import java.net.ConnectException;

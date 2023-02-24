@@ -1,6 +1,6 @@
 package src;
 
-import src.View.ChattingClient;
+import View.ChattingClient;
 
 import java.awt.*;
 

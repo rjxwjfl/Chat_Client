@@ -1,7 +1,7 @@
-package src.Controller.Thread;
+package Controller.Thread;
 
-import src.Controller.Thread.Interface.InputThreadListener;
-import src.View.ChattingClient;
+import Controller.Thread.Interface.InputThreadListener;
+import View.ChattingClient;
 
 import java.io.IOException;
 import java.io.InputStream;

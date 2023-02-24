@@ -1,11 +1,11 @@
-package src.View;
+package View;
 
 
-import src.Controller.Repository.SocketCorrespModule;
-import src.Controller.ServerConnection;
-import src.View.Enhancer.EnhancedBorderLine;
-import src.View.Enhancer.EnhancedButton;
-import src.View.Enhancer.EnhancedTextField;
+import Controller.Repository.SocketCorrespModule;
+import Controller.ServerConnection;
+import View.Enhancer.EnhancedBorderLine;
+import View.Enhancer.EnhancedButton;
+import View.Enhancer.EnhancedTextField;
 
 import java.awt.*;
 import java.awt.event.*;

@@ -1,18 +1,18 @@
-package src.Controller.Repository;
+package Controller.Repository;
 
+import View.ChattingClient;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.internal.LinkedTreeMap;
-import src.Model.DataTransferObject.Dto;
-import src.Model.MFSmodel;
-import src.Model.MTSmodel;
-import src.Model.UserModel;
-import src.Controller.Thread.InputThread;
-import src.Controller.Thread.Interface.InputThreadListener;
-import src.Controller.Thread.Interface.OutputThreadListener;
-import src.Controller.Thread.OutputThread;
-import src.View.ChattingClient;
+import Model.DataTransferObject.Dto;
+import Model.MFSmodel;
+import Model.MTSmodel;
+import Model.UserModel;
+import Controller.Thread.InputThread;
+import Controller.Thread.Interface.InputThreadListener;
+import Controller.Thread.Interface.OutputThreadListener;
+import Controller.Thread.OutputThread;
 
 import java.io.IOException;
 

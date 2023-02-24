@@ -1,4 +1,4 @@
-package src.Controller;
+package Controller;
 
 public class PanelController {
 }

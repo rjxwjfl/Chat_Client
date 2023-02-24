@@ -1,4 +1,4 @@
-package src.View.Enhancer;
+package View.Enhancer;
 
 import javax.swing.*;
 import java.awt.*;
