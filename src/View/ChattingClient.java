@@ -67,6 +67,7 @@ public class ChattingClient extends JFrame {
             }
         });
         setBounds(100, 100, 480, 800);
+        setResizable(false);
         mainPanel = new JPanel();
         mainPanel.setBackground(new Color(255, 204, 0));
         mainPanel.setBorder(null);
